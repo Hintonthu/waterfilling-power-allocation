@@ -8,8 +8,9 @@ power_alloc_vec = waterfilling(total_power, noise_vec);
 
 %% Visualize the stacked output
 power_alloc_bar = bar([noise_vec; power_alloc_vec]', 'stacked');
-set(power_alloc_bar(1), 'FaceColor', 'black'); set(power_alloc_bar(2), 'FaceColor', 'cyan');
-title('Water filling analogy for Gaussian channel power allocation with joint power constraint');
+set(power_alloc_bar(1), 'FaceColor', 'green'); set(power_alloc_bar(2), 'FaceColor', 'cyan');
+str = sprintf('Water filling analogy for Gaussian channel power allocation with joint power constraint  = %d ', total_power);
+title(str);
 channel_idx = 1:numel(noise_vec);
 set(gca, 'XTick', channel_idx);
 xlabel('Channel index'); ylabel('Power level'); 
@@ -20,5 +21,10 @@ for i1=channel_idx
         text(channel_idx(i1),noise_vec(i1) + .5*power_alloc_vec(i1) - 0.25,num2str(power_alloc_vec(i1),'%0.1f'),...
                'HorizontalAlignment','center',...
                'VerticalAlignment','bottom');
+    end
+    
+    if(power_alloc_vec(i1)~=noise_vec(i1))
+        text(channel_idx(i1), noise_vec(i1) - .7, num2str(noise_vec(i1),'%0.1f'),...
+               'HorizontalAlignment','center', 'VerticalAlignment','bottom', 'FontWeight', 'bold');
     end
 end
